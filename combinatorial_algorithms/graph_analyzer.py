@@ -36,7 +36,7 @@ def is_graph_acyclic(graph):
             if node not in visited:
                 _queue.put(node)
                 if steps[node - 1] != -1:
-                    steps[node - 1] = ((steps[node - 1], current))
+                    steps[node - 1] = (steps[node - 1], current)
                     return get_cycle_of_graph(steps, node)
                 else:
                     steps[node - 1] = current
@@ -70,7 +70,8 @@ def get_cycle_of_graph(steps, node):
     cycle = first_part ^ second_part
     cycle.add(start_of_cycle)
 
-    return f'N {sorted(cycle)}'.replace(',', '').replace('[', '').replace(']','')
+    return (f'N {sorted(cycle)}'.replace(',', '').
+            replace('[', '').replace(']', ''))
 
 
 def write_result(result):

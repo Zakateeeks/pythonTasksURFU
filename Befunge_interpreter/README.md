@@ -38,11 +38,3 @@ python interpreter.py <filename.bf>
  `~`               | Prompt user for a character and push its ASCII value.                             
  `@`                  | Stop instruction pointer                                                          
 
-## 04.05 ##
-Ввод программы с консоли (stdin stdout)
-Тесты
-Доп:
-
-Есть проект на 20кк строк на java, каждый метод аннотирован, везде есть документация (подробная пиздец)
-Название метода - его анатация - developer.android.com
-Статик HTTP страница - надо хороший GUI
