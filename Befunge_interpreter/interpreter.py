@@ -10,12 +10,23 @@ def main() -> None:
 
     bf_file = sys.argv[1]
     try:
-        with open(bf_file) as file:
-            code = file.readlines()
+        if sys.argv[1] == 'mycode':
+            code = []
+            stop_char = 'Q'
+            while True:
+                line = sys.stdin.readline().strip()
+                if line == stop_char:
+                    break
+                code.append(line)
+
+        else:
+            with open(bf_file) as file:
+                code = file.readlines()
     except FileNotFoundError:
         print(f"File {bf_file} not found")
         sys.exit(0)
 
+    print(code)
     interpreter = Pointer(code)
     interpreter.action()
     print(interpreter.output)

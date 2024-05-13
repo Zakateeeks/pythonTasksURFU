@@ -47,79 +47,81 @@ class Pointer:
                 else:
                     self.stack.append(ord(symbol))
             else:
-                if symbol.isdigit():
-                    self.stack.append(int(symbol))
-                elif symbol == '+':
-                    self.stack.append(self.stack.pop() + self.stack.pop())
-                elif symbol == '-':
-                    self.stack.append(self.stack.pop() - self.stack.pop())
-                elif symbol == '*':
-                    self.stack.append(self.stack.pop() * self.stack.pop())
-                elif symbol == '/':
-                    self.stack.append(self.stack.pop() // self.stack.pop())
-                elif symbol == '%':
-                    self.stack.append(self.stack.pop() % self.stack.pop())
-                elif symbol == '!':
-                    self.stack.append(int(not self.stack.pop()))
-                elif symbol == '`':
-                    self.stack.append(int(self.stack.pop() <
-                                          self.stack.pop()))
-                elif symbol == '>':
-                    self.vector = (0, 1)
-                elif symbol == '<':
-                    self.vector = (0, -1)
-                elif symbol == '^':
-                    self.vector = (-1, 0)
-                elif symbol == 'v':
-                    self.vector = (1, 0)
-                elif symbol == '?':
-                    import random
-                    arr_vector = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-                    self.vector = random.choice(arr_vector)
-                elif symbol == '_':
-                    if len(self.stack) != 0:
-                        self.vector = (0, 1) if (
-                                self.stack.pop() == 0) else (0, -1)
-                    else:
+                match symbol:
+                    case symbol.isdigit():
+                        self.stack.append(int(symbol))
+                    case '+':
+                        self.stack.append(self.stack.pop() + self.stack.pop())
+                    case '-':
+                        self.stack.append(self.stack.pop() - self.stack.pop())
+                    case '*':
+                        self.stack.append(self.stack.pop() * self.stack.pop())
+                    case '/':
+                        self.stack.append(self.stack.pop() // self.stack.pop())
+                    case '%':
+                        self.stack.append(self.stack.pop() % self.stack.pop())
+                    case '!':
+                        self.stack.append(int(not self.stack.pop()))
+                    case '`':
+                        self.stack.append(int(self.stack.pop() <
+                                              self.stack.pop()))
+                    case '>':
                         self.vector = (0, 1)
-                elif symbol == '|':
-                    self.vector = (-1, 0) if self.stack.pop() == 0 else (1, 0)
-                elif symbol == '"':
-                    self.is_string = True
-                elif symbol == ':':
-                    if len(self.stack) != 0:
-                        last = self.stack.pop()
-                        self.stack.append(last)
-                        self.stack.append(last)
-                elif symbol == '\\':
-                    peak = self.stack.pop()
-                    sub_peak = self.stack.pop()
-                    self.stack.append(peak)
-                    self.stack.append(sub_peak)
-                elif symbol == '$':
-                    self.stack.pop()
-                elif symbol == '.':
-                    peak = self.stack.pop()
-                    self.output += str(peak)
-                elif symbol == ',':
-                    peak = self.stack.pop()
-                    self.output += (chr(peak))
-                elif symbol == '#':
-                    self.steps()
-                elif symbol == 'p':
-                    y, x, v = (self.stack.pop(), self.stack.pop(),
-                               self.stack.pop())
-                    self.code[y] = (self.code[y][:x] + chr(v)
-                                    + self.code[y][x + 1:])
-                elif symbol == 'g':
-                    y, x = self.stack.pop(), self.stack.pop()
-                    self.stack.append(ord(self.code[y][x]))
-                elif symbol == '&':
-                    value = int(input('Enter a number: '))
-                    self.stack.append(value)
-                elif symbol == '~':
-                    value = input('Enter a symbol: ')
-                    self.stack.append(ord(value[0]))
-                elif symbol == '@':
-                    break
+                    case '<':
+                        self.vector = (0, -1)
+                    case '^':
+                        self.vector = (-1, 0)
+                    case 'v':
+                        self.vector = (1, 0)
+                    case '?':
+                        import random
+                        arr_vector = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+                        self.vector = random.choice(arr_vector)
+                    case '_':
+                        if len(self.stack) != 0:
+                            self.vector = (0, 1) if (
+                                    self.stack.pop() == 0) else (0, -1)
+                        else:
+                            self.vector = (0, 1)
+                    case '|':
+                        self.vector = (-1, 0) if self.stack.pop() == 0 \
+                            else (1, 0)
+                    case '"':
+                        self.is_string = True
+                    case ':':
+                        if len(self.stack) != 0:
+                            last = self.stack.pop()
+                            self.stack.append(last)
+                            self.stack.append(last)
+                    case '\\':
+                        peak = self.stack.pop()
+                        sub_peak = self.stack.pop()
+                        self.stack.append(peak)
+                        self.stack.append(sub_peak)
+                    case '$':
+                        self.stack.pop()
+                    case '.':
+                        peak = self.stack.pop()
+                        self.output += str(peak)
+                    case ',':
+                        peak = self.stack.pop()
+                        self.output += (chr(peak))
+                    case '#':
+                        self.steps()
+                    case 'p':
+                        y, x, v = (self.stack.pop(), self.stack.pop(),
+                                   self.stack.pop())
+                        self.code[y] = (self.code[y][:x] + chr(v)
+                                        + self.code[y][x + 1:])
+                    case 'g':
+                        y, x = self.stack.pop(), self.stack.pop()
+                        self.stack.append(ord(self.code[y][x]))
+                    case '&':
+                        value = int(input('Enter a number: '))
+                        self.stack.append(value)
+                    case '~':
+                        value = input('Enter a symbol: ')
+                        self.stack.append(ord(value[0]))
+                    case '@':
+                        break
             self.steps()
