@@ -1,5 +1,5 @@
 import logging
-import time
+import timeit
 from memory_profiler import memory_usage
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w",
@@ -17,12 +17,10 @@ def data_usage(func):
 
     def wrapper(*args, **kwargs):
         mem_before = memory_usage()[0]
-        start_time = time.time()
         result = func(*args, **kwargs)
-        end_time = time.time()
-        execution_time = end_time - start_time
         mem_after = memory_usage()[0]
 
+        execution_time = timeit.timeit(lambda: func(*args, **kwargs), number=1000)
         logging.info(f"Function '{func.__name__}' memory usage before:"
                      f" {mem_before} MB")
         logging.info(f"Function '{func.__name__}' memory usage after:"

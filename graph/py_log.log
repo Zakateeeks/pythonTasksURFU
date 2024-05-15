@@ -1,5 +1,3 @@
-2024-04-20 12:13:04,650 INFO Function 'main' memory usage before: 22.4453125 MB
-2024-04-20 12:13:04,652 INFO Function 'main' memory usage after: 22.46875 MB
-2024-04-20 12:13:04,653 INFO Function 'main' execution time: 0.0022263526916503906 seconds
-
-
+2024-05-15 22:07:04,394 INFO Function 'main' memory usage before: 22.33984375 MB
+2024-05-15 22:07:04,394 INFO Function 'main' memory usage after: 22.3671875 MB
+2024-05-15 22:07:04,394 INFO Function 'main' execution time: 0.5196521999314427 seconds
