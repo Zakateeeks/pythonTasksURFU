@@ -1,5 +1,5 @@
-import imaplib
-import email
+import socket
+import ssl
 import argparse
 import getpass
 from email.header import decode_header
@@ -11,34 +11,78 @@ def decode_str(s):
         part.decode(encoding or 'utf-8') if isinstance(part, bytes) else part for part, encoding in decode_header(s))
 
 
-def fetch_email_headers(server, user, password, ssl=False, start=1, end=None):
+def fetch_email_headers(server, user, password, ssl_enabled=False, start=1, end=None):
     """Fetch email headers."""
-    if ssl:
-        imap_server = imaplib.IMAP4_SSL(server)
+    if ssl_enabled:
+        imap_server = ssl.wrap_socket(socket.socket(socket.AF_INET, socket.SOCK_STREAM))
     else:
-        imap_server = imaplib.IMAP4(server)
+        imap_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    imap_server.login(user, password)
-    imap_server.select('INBOX')
+    imap_server.connect((server, 993 if ssl_enabled else 143))
+
+    # Send login command
+    imap_server.sendall(bytes(f'LOGIN {user} {password}\r\n', 'utf-8'))
+
+    # Receive response
+    response = imap_server.recv(1024).decode('utf-8')
+    if not response.startswith('* OK'):
+        print("Login failed. Please check your credentials.")
+        return
+
+    # Send LIST command to get a list of available folders
+    imap_server.sendall(b'LIST "" *\r\n')
+
+    # Receive response
+    response = imap_server.recv(4096).decode('utf-8')
+    print(response)
+    if not response.startswith('* LIST'):
+        print("Failed to retrieve list of folders.")
+        return
+
+    # Check if INBOX is available
+    if 'INBOX' not in response:
+        print("INBOX folder not found.")
+        return
+
+    # Send SELECT command
+    imap_server.sendall(b'SELECT INBOX\r\n')
+
+    # Receive response
+    response = imap_server.recv(1024).decode('utf-8')
+    if not response.startswith('* OK'):
+        print("Failed to select INBOX.")
+        return
 
     if not end:
         end = start
 
-    typ, data = imap_server.fetch(f'{start}:{end}', '(RFC822.HEADER)')
-    if typ == 'OK':
-        for response_part in data:
-            if isinstance(response_part, tuple):
-                msg = email.message_from_bytes(response_part[1])
-                headers = {
-                    'To': decode_str(msg['To']),
-                    'From': decode_str(msg['From']),
-                    'Subject': decode_str(msg['Subject']),
-                    'Date': decode_str(msg['Date']),
-                    'Size': len(response_part[1])
-                }
-                print(headers)
+    # Send FETCH command
+    imap_server.sendall(bytes(f'FETCH {start}:{end} RFC822.HEADER\r\n', 'utf-8'))
+
+    # Receive response
+    response = imap_server.recv(4096).decode('utf-8')
+
+    # Process response
+    for line in response.splitlines():
+        if line.startswith('To:'):
+            to_header = line.split(':', 1)[1].strip()
+        elif line.startswith('From:'):
+            from_header = line.split(':', 1)[1].strip()
+        elif line.startswith('Subject:'):
+            subject_header = line.split(':', 1)[1].strip()
+        elif line.startswith('Date:'):
+            date_header = line.split(':', 1)[1].strip()
+        elif line.startswith('RFC822.HEADER'):
+            headers = {
+                'To': decode_str(to_header),
+                'From': decode_str(from_header),
+                'Subject': decode_str(subject_header),
+                'Date': decode_str(date_header),
+                'Size': len(line.encode('utf-8'))
+            }
+            print(headers)
+
     imap_server.close()
-    imap_server.logout()
 
 
 def main():
