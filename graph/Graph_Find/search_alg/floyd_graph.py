@@ -1,4 +1,7 @@
-def floyd_warshall(graph: dict) -> dict | None:
+from graph.Graph_Find.create_graph import *
+
+
+def floyd_warshall(this_graph: Graph) -> dict | None:
     """
     Алгоритм Флойда-Уоршелла для поиска кратчайшего пути
 
@@ -8,12 +11,13 @@ def floyd_warshall(graph: dict) -> dict | None:
     третью вершину, который короче, чем текущий наилучший путь, этот
     путь обновляется.
 
-    :param: graph Граф, представленный в виде словаря
+    :param: this_graph Граф
 
     :return: Словарь, где ключ/значение - вершина/наикратчайший путь
     """
 
     try:
+        graph = to_dict(this_graph)
         n = len(graph)
         dist = [[float('infinity')] * n for _ in range(n)]
 

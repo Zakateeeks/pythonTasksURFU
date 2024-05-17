@@ -41,7 +41,7 @@ class Graph:
             self.adjList[src][dest] = weight
 
 
-def get_graph(vertex: list, count_vertex: int) -> dict:
+def get_graph(vertex: list, count_vertex: int) -> Graph:
     """
     Создает объект графа и возвращает его список смежности.
 
@@ -54,7 +54,7 @@ def get_graph(vertex: list, count_vertex: int) -> dict:
     """
 
     graph = Graph(vertex, count_vertex)
-    return graph.adjList
+    return graph
 
 
 def set_graph() -> tuple:
@@ -88,6 +88,17 @@ def set_graph() -> tuple:
     except ValueError:
         print("Ошибка: Введите корректное число вершин.")
         return set_graph()
+
+
+def to_dict(graph: Graph) -> dict:
+    """
+    Переводит граф в словарь.
+
+    :param graph: переменная типа Graph
+    :return: dict: словарь, содержащий вершины графа, смежные вершины и вес
+
+    """
+    return graph.adjList
 
 
 def read_adjacency_matrix(filename: str) -> tuple | int:

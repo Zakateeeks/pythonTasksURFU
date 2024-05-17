@@ -1,7 +1,9 @@
 import heapq
 
+from graph.Graph_Find.create_graph import *
 
-def astar(graph: dict, start: int) -> dict | None:
+
+def astar(this_graph: Graph, start: int) -> dict | None:
     """
      Алгоритм A* для поиска кратчайшего пути
 
@@ -15,7 +17,7 @@ def astar(graph: dict, start: int) -> dict | None:
      Если эта оценка меньше, чем текущая длина пути до соседа, информация о соседе
      обновляется и он добавляется в кучу.
 
-     :param: graph Граф, представленный в виде словаря
+     :param: this_graph Граф
      :param: start - Точка старта, вершина от которой начинается поиск
 
      :return: Словарь, где ключ/значение - вершина/наикратчайший путь
@@ -23,6 +25,7 @@ def astar(graph: dict, start: int) -> dict | None:
 
     try:
         nocheck_vertex = []
+        graph = to_dict(this_graph)
         key = list(graph.items())
         goal = len(key) - 1
         heapq.heappush(nocheck_vertex, (0, start))

@@ -1,7 +1,9 @@
 import heapq
 
+from graph.Graph_Find.create_graph import *
 
-def dijkstra_search(graph: dict, start: int) -> dict | None:
+
+def dijkstra_search(this_graph: Graph, start: int) -> dict | None:
     """
     Алгоритм Дейкстры для поиска кратчайшего пути
 
@@ -10,13 +12,14 @@ def dijkstra_search(graph: dict, start: int) -> dict | None:
     Для каждой вершины мы рассматриваем все её соседние вершины
     и обновляем расстояние до них, если находим более короткий путь.
 
-    :param graph  Граф (в виде словаря)
+    :param this_graph  Граф
     :param start  Точка старта, вершина от которой начинается поиск
 
     :return: distance  словарь, ключ/значение - вершина/наикратчайший путь
     """
 
     try:
+        graph = to_dict(this_graph)
         distances = {vertex: float('infinity') for vertex in graph}
         distances[start] = 0
         queue = [(0, start)]

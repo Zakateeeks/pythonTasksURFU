@@ -1,4 +1,7 @@
-def bellman_ford(graph: dict, src: int) -> dict | None:
+from graph.Graph_Find.create_graph import *
+
+
+def bellman_ford(this_graph: Graph, src: int) -> dict | None:
     """
     Алгоритм Белмана Форда для поиска кратчайшего пути
 
@@ -15,13 +18,14 @@ def bellman_ford(graph: dict, src: int) -> dict | None:
     алгоритм возвращает None.
 
 
-    :param graph  Граф (в виде словаря)
+    :param this_graph  Граф
     :param src  Точка старта, вершина от которой начинается поиск
 
     :return: distance  словарь, ключ/значение - вершина/наикратчайший путь
     """
 
     try:
+        graph = to_dict(this_graph)
         count_v = len(graph)
         distance = {vertex: float('infinity') for vertex in graph}
         distance[src] = 0

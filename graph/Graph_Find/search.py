@@ -1,11 +1,12 @@
+from graph.Graph_Find.create_graph import *
 from graph.Graph_Find.search_alg import *
 
 
-def dijkstra(graph: dict, start: int) -> dict | None:
+def dijkstra(graph: Graph, start: int) -> dict | None:
     """
     Алгоритм Дейкстры для поиска кратчайшего пути
 
-    :param graph  Граф (в виде словаря)
+    :param graph  Граф
     :param start  Точка старта, вершина от которой начинается поиск
 
     :return: distance  словарь, ключ/значение - вершина/наикратчайший путь
@@ -13,11 +14,11 @@ def dijkstra(graph: dict, start: int) -> dict | None:
     return dijkstra_search(graph, start)
 
 
-def bell_ford(graph: dict, start: int) -> dict | None:
+def bell_ford(graph: Graph, start: int) -> dict | None:
     """
     Алгоритм Белмана Форда для поиска кратчайшего пути
 
-    :param graph  Граф (в виде словаря)
+    :param graph  Граф
     :param start  Точка старта, вершина от которой начинается поиск
 
     :return: distance  словарь, ключ/значение - вершина/наикратчайший путь
@@ -25,11 +26,11 @@ def bell_ford(graph: dict, start: int) -> dict | None:
     return bellman_ford(graph, start)
 
 
-def floyd(graph: dict, start: int) -> dict | None:
+def floyd(graph: Graph, start: int) -> dict | None:
     """
     Алгоритм Флойда-Уоршелла для поиска кратчайшего пути
 
-    :param: graph Граф, представленный в виде словаря
+    :param: graph Граф
     :param: start - Точка старта, вершина от которой начинается поиск
 
     :return: Словарь, где ключ/значение - вершина/наикратчайший путь
@@ -39,11 +40,11 @@ def floyd(graph: dict, start: int) -> dict | None:
     return floyd_res
 
 
-def a_star(graph: dict, start: int) -> dict | None:
+def a_star(graph: Graph, start: int) -> dict | None:
     """
     Алгоритм A* для поиска кратчайшего пути
 
-    :param: graph Граф, представленный в виде словаря
+    :param: graph Граф
     :param: start - Точка старта, вершина от которой начинается поиск
 
     :return: Словарь, где ключ/значение - вершина/наикратчайший путь
