@@ -38,3 +38,5 @@ python interpreter.py <filename.bf>
  `~`               | Prompt user for a character and push its ASCII value.                             
  `@`                  | Stop instruction pointer                                                          
 
+
+перевести в ООП, befunge-98 реализовать
