@@ -1,5 +1,3 @@
-import sys
-
 from interpreter_config import *
 
 
@@ -23,12 +21,11 @@ def main() -> None:
             with open(bf_file) as file:
                 code = file.readlines()
     except FileNotFoundError:
-        print(f"File {bf_file} not found")
+        print(f'File {bf_file} not found')
         sys.exit(0)
 
-    print(code)
     interpreter = Pointer(code)
-    interpreter.action()
+    interpreter.execute()
     print(interpreter.output)
 
 
