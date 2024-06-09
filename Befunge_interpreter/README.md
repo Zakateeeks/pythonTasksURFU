@@ -1,5 +1,10 @@
 # Befunge interpreter #
 
+## Introduction ##
+
+Befunge is a stack-based, reflective, esoteric programming language.
+The Befunge interpreter provided here allows you to run Befunge programs written in .bf files.
+
 ## Usage: ##
 
 ```
@@ -38,5 +43,7 @@ python interpreter.py <filename.bf>
  `~`                 | Prompt user for a character and push its ASCII value.                             
  `@`                 | Stop instruction pointer                                                          
 
-Посмотреть в abc про протоколы, через который можно реализовать стек. 
-Аргпарс, норм документация, аннотация типов. 
+## Additional Resources ##
+
+[Befunge-93 Wikipedia](https://en.wikipedia.org/wiki/Befunge)    
+[Befunge-93 habr](https://habr.com/ru/articles/494132/)

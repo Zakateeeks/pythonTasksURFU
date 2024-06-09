@@ -1,7 +1,6 @@
 import random
 import sys
 from abc import ABC, abstractmethod
-from typing import Tuple, List, NoReturn, Dict
 
 
 class Stack:
@@ -16,17 +15,14 @@ class Stack:
     is_empty() - Checks if the stack is empty
     """
 
-    def __init__(self) -> NoReturn:
-        self.stack: List[int] = []
+    def __init__(self) -> None:
+        self.stack: list[int] = []
 
-    def push(self, value: int) -> NoReturn:
+    def push(self, value: int) -> None:
         """
         Adds an item to the stack.
 
-        Args
-        ----------
-        value : int
-            The value to add to the stack.
+        :param value : The value to add to the stack.
         """
         self.stack.append(value)
 
@@ -34,20 +30,19 @@ class Stack:
         """
          Returns and removes an element at the top of the stack.
 
-         Returns
-         ----------
-         int: The top element of the stack or 0 if the stack is empty.
+         :return: The top element of
+          the stack or 0 if the stack is empty.
          """
         return self.stack.pop() if self.stack else 0
 
-    def duplicate(self) -> NoReturn:
+    def duplicate(self) -> None:
         """
         Copies the top item of the stack and adds it to the stack.
         """
         if self.stack:
             self.push(self.stack[-1])
 
-    def swap(self) -> NoReturn:
+    def swap(self) -> None:
         """
         Swaps the top and sub-top items of the stack.
         """
@@ -58,9 +53,8 @@ class Stack:
         """
         Returns an item at the top of the stack without removing it.
 
-        Returns
-        ----------
-        int: The top element of the stack or 0 if the stack is empty.
+        :return: The top element of the stack or 0 if the
+         stack is empty.
         """
         return self.stack[-1] if self.stack else 0
 
@@ -68,9 +62,7 @@ class Stack:
         """
         Checks if the stack is empty.
 
-        Returns
-        ----------
-        bool: True if the stack is empty, False otherwise.
+        :return: True if the stack is empty, False otherwise.
         """
         return len(self.stack) == 0
 
@@ -84,26 +76,21 @@ class Vector:
     """
 
     def __init__(self):
-        self.vector: Tuple[int, int] = (0, 1)
+        self.vector: tuple[int, int] = (0, 1)
 
-    def set_vector(self, new_vector: Tuple[int, int]) -> NoReturn:
+    def set_vector(self, new_vector: tuple[int, int]) -> None:
         """
         Sets the direction of motion.
 
-        Args
-        ----------
-        new_vector : Tuple[int, int]
-            The new direction vector.
+        :param new_vector: The new direction vector.
         """
         self.vector = new_vector
 
-    def get_vector(self) -> Tuple[int, int]:
+    def get_vector(self) -> tuple[int, int]:
         """
         Returns the direction of motion.
 
-        Returns
-        ----------
-        Tuple[int, int]: The current direction vector.
+        :return: The current direction vector.
         """
         return self.vector
 
@@ -116,28 +103,23 @@ class Position:
     get_position() - Returns the current position
     """
 
-    def __init__(self) -> NoReturn:
-        self.position: Tuple[int, int] = (0, 0)
+    def __init__(self) -> None:
+        self.position: tuple[int, int] = (0, 0)
 
-    def move(self, vector: Tuple[int, int]) -> NoReturn:
+    def move(self, vector: tuple[int, int]) -> None:
         """
         Moves the position based on the direction of movement.
 
-        Args
-        ----------
-        vector : Tuple[int, int]
-            The direction vector for movement.
+        :param vector: The direction vector for movement.
         """
         self.position = (self.position[0] + vector[0],
                          self.position[1] + vector[1])
 
-    def get_position(self) -> Tuple[int, int]:
+    def get_position(self) -> tuple[int, int]:
         """
         Returns the current position.
 
-        Returns
-        ----------
-        Tuple[int, int]: The current position coordinates.
+        :return: The current position coordinates.
         """
         return self.position
 
@@ -151,21 +133,16 @@ class Code:
     get_value() - Returns the symbol at the given coordinates
     """
 
-    def __init__(self, code: List[str]):
+    def __init__(self, code: list[str]):
         self.code = code
 
-    def get_symbol(self, position: Tuple[int, int]) -> str:
+    def get_symbol(self, position: tuple[int, int]) -> str:
         """
         Gets a symbol from Befunge code.
 
-        Args
-        ----------
-        position : Tuple[int, int]
-            The coordinates of the symbol.
+        :param position: The coordinates of the symbol.
 
-        Returns
-        ----------
-        str: The symbol at the specified coordinates.
+        :return: The symbol at the specified coordinates.
         """
         try:
             return self.code[position[0]][position[1]]
@@ -173,18 +150,13 @@ class Code:
             print('Your code is incorrect')
             sys.exit(0)
 
-    def update_code(self, y: int, x: int, v: int) -> NoReturn:
+    def update_code(self, y: int, x: int, v: int) -> None:
         """
         Updates the symbol at specified coordinates.
 
-        Args
-        ----------
-        y : int
-            The y-coordinate.
-        x : int
-            The x-coordinate.
-        v : int
-            The new value to set.
+        :param y : The y-coordinate.
+        :param x : The x-coordinate.
+        :param v : The new value to set.
         """
         self.code[y] = self.code[y][:x] + chr(v) + self.code[y][x + 1]
 
@@ -192,16 +164,10 @@ class Code:
         """
         Returns the value of the symbol at the given coordinates.
 
-        Args
-        ----------
-        y : int
-            The y-coordinate.
-        x : int
-            The x-coordinate.
+        :param y : The y-coordinate.
+        :param x : The x-coordinate.
 
-        Returns
-        ----------
-        int: The ASCII value of the symbol at the specified coordinates.
+        :return: The ASCII value of the symbol at the specified coordinates.
         """
         return ord(self.code[y][x])
 
@@ -212,297 +178,240 @@ class Command(ABC):
     """
 
     @abstractmethod
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         pass
 
 
 class AddCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the addition command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.push(pointer.stack.pop() + pointer.stack.pop())
 
 
 class SubCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the subtraction command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
-        pointer.stack.push(pointer.stack.pop() - pointer.stack.pop())
+        first = pointer.stack.pop()
+        second = pointer.stack.pop()
+        pointer.stack.push(second - first)
 
 
 class MultiplyCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the multiplication command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.push(pointer.stack.pop() * pointer.stack.pop())
 
 
 class DivideCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the division command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
-        pointer.stack.push(pointer.stack.pop() // pointer.stack.pop())
+        first = pointer.stack.pop()
+        second = pointer.stack.pop()
+        pointer.stack.push(second // first)
 
 
 class ModuleCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the modulus command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
-        pointer.stack.push(pointer.stack.pop() % pointer.stack.pop())
+        first = pointer.stack.pop()
+        second = pointer.stack.pop()
+        pointer.stack.push(second % first)
 
 
 class NotCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the logical NOT command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
-        self.stack.push(int(not pointer.stack.pop))
+        element = pointer.stack.pop()
+        pointer.stack.push(int(not element))
 
 
 class ComparisonCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Executes the comparison command.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
-        self.stack.push(int(pointer.stack.pop() <
-                            pointer.stack.pop()))
+        pointer.stack.push(int(pointer.stack.pop() <
+                               pointer.stack.pop()))
 
 
 class RightCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to right.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((0, 1))
 
 
 class LeftCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to left.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((0, -1))
 
 
 class UpCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to up.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((-1, 0))
 
 
 class DownCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to down.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((1, 0))
 
 
 class RandomCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets a random direction.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector(random.choice([(0, 1), (0, -1),
                                                  (1, 0), (-1, 0)]))
 
 
 class ConditionalRightCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to right if the top of the stack is 0,
+        else sets it to left.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((0, 1) if pointer.stack.pop() == 0
                                   else (0, -1))
 
 
 class ConditionalUpCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Sets the direction to up if the top of the stack is 0,
+        else sets it to down.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.vector.set_vector((-1, 0) if pointer.stack.pop == 0
                                   else (1, 0))
 
 
 class StringModeCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Toggles string mode.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.is_string = not pointer.is_string
 
 
 class DuplicateCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Duplicates the top item on the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.duplicate()
 
 
 class SwapCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Swaps the top two items on the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.swap()
 
 
 class PopCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Pops the top item from the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.pop()
 
 
 class OutputIntCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Outputs the top item of the stack as an integer.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.output += str(pointer.stack.pop())
 
 
 class OutputCharCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Outputs the top item of the stack as a character.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         peak = pointer.stack.pop()
         pointer.output += chr(peak)
 
 
 class SkipCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Skips the next cell.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.steps()
 
 
 class PutCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Puts a value at a specified position in the code grid.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         y, x, v = (pointer.stack.pop(), pointer.stack.pop(),
                    pointer.stack.pop())
@@ -510,92 +419,76 @@ class PutCommand(Command):
 
 
 class GetCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Gets a value from a specified position in the code grid and
+        pushes it to the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         y, x = pointer.stack.pop(), pointer.stack.pop()
         pointer.stack.push(pointer.code.get_value(y, x))
 
 
 class InputNumberCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Reads a number from the input and pushes it to the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         value = int(input('Enter a number: '))
         pointer.stack.push(value)
 
 
 class InputCharCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Reads a character from the input and pushes
+        its ASCII value to the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         value = input("Enter a symbol: ")
         pointer.stack.push(ord(value[0]))
 
 
 class StopCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Stops the program execution.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stop = True
 
 
 class QuiteCommand(Command):
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Exits the program with the top value of the stack as the exit code.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         value = pointer.stack.pop()
         sys.exit(value)
 
 
 class HexCommand(Command):
-    def __init__(self, value: int) -> NoReturn:
+    def __init__(self, value: int) -> None:
         self.value = value
 
-    def execute(self, pointer: 'Pointer') -> NoReturn:
+    def execute(self, pointer: 'Pointer') -> None:
         """
+        Pushes a hexadecimal value onto the stack.
 
-
-        Args
-        ----------
-        pointer : Pointer
-            The pointer object.
+        :param pointer : The pointer object.
         """
         pointer.stack.push(self.value)
 
 
 class Pointer:
-    COMMANDS: Dict[str, Command] = {
+    COMMANDS: dict[str, Command] = {
         '+': AddCommand(),
         '-': SubCommand(),
         '*': MultiplyCommand(),
@@ -631,7 +524,7 @@ class Pointer:
         '@': StopCommand()
     }
 
-    def __init__(self, code: List[str]) -> NoReturn:
+    def __init__(self, code: list[str]) -> None:
 
         self.code = Code(code)
         self.stack = Stack()
@@ -641,13 +534,13 @@ class Pointer:
         self.output = ''
         self.stop = False
 
-    def steps(self) -> NoReturn:
+    def steps(self) -> None:
         """
         Move the pointer one step in the direction of the vector.
         """
         self.position.move(self.vector.get_vector())
 
-    def execute(self) -> NoReturn:
+    def execute(self) -> None:
         """
         Here we work with the character from the bf code,
         which is currently pointed to by the pointer
