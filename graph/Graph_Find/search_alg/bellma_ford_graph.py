@@ -33,7 +33,8 @@ def bellman_ford(this_graph: Graph, src: int) -> dict | None:
         for _ in range(count_v - 1):
             for vertex in graph:
                 for neighbor, weight in graph[vertex].items():
-                    if (distance[vertex] != float("infinity") and distance[vertex]
+                    if (distance[vertex] != float("infinity")
+                            and distance[vertex]
                             + weight < distance[neighbor]):
                         distance[neighbor] = distance[vertex] + weight
 
